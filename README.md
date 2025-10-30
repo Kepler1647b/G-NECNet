@@ -31,4 +31,40 @@ conda env create -f my_env.yaml
 ```
 conda activate env1
 ```
+- Typical installation time: 1 hour
 
+### preprocess dataset for training
+we use the python files to convert the WSI to patches with size 512*512 pixels and taking color normalization (optimal) as preprocessing.
+
+The files are in ./preprocessing:
+'''
+- generate_patch.py
+- Vahadane.main.py
+'''
+
+### train model for tumor detecting 
+- To run the detector_train.py
+
+```bash
+python detector_train.py --TrainFolder './tumorfolder' --TrainFolder2 './normalfolder' --Comment 'resnet50,LR0.001,Decay0.0005' --FoldN 1 --Pretrain
+```
+
+### evaluate model
+```bash
+python detector_test.py --TrainFolder './datafolder' --FoldN 1
+
+```
+
+### classify the type of tumor
+After separating the tumor region patch from the slide bag,we using the tumor patch to training a model
+that could predicting the type of the tumor.
+
+the datas' organizing way is showed in /EBV_classifier/data, you can run:
+
+```bash
+python classifier_train.py --TrainFolder './trainfolder'  --Comment 'resnet50,epoch100,10x,Vahadane' --Pretrain --FoldN 1
+```
+
+### evaluate model
+```bash
+python classifier_test.py --TrainFolder './testfolder' --FoldN 1
