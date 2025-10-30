@@ -37,10 +37,10 @@ conda activate env1
 we use the python files to convert the WSI to patches with size 512*512 pixels and taking color normalization (optimal) as preprocessing.
 
 The files are in ./preprocessing:
-'''
+```
 - generate_patch.py
 - Vahadane.main.py
-'''
+```
 
 ### train model for tumor detecting 
 - To run the detector_train.py
